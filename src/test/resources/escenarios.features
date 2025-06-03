@@ -1,0 +1,30 @@
+Escenario: Crear una tarea con título y descripción válidos
+Dado que el usuario proporciona un JSON con "title" y "description"
+Cuando se hace un POST a /tasks
+Entonces el sistema responde con estado 201
+Y el cuerpo contiene el ID generado, el título y la descripción enviados
+Y el campo "completed" está en false por defecto
+
+Escenario: Intentar crear una tarea sin título
+Dado que el usuario proporciona un JSON sin el campo "title"
+Cuando se hace un POST a /tasks
+Entonces el sistema responde con estado 400
+Y el mensaje de error indica que "title" es obligatorio
+
+Escenario: Intentar crear una tarea sin descripción
+Dado que el usuario proporciona un JSON sin el campo "description"
+Cuando se hace un POST a /tasks
+Entonces el sistema responde con estado 400
+Y el mensaje de error indica que "description" es obligatorio
+
+Escenario: Crear una tarea con el campo "completed" explícitamente en true
+Dado que el usuario proporciona un JSON con "title", "description" y "completed" en true
+Cuando se hace un POST a /tasks
+Entonces el sistema responde con estado 201
+Y el cuerpo contiene el campo "completed" en true
+
+Escenario: Verificar que la tarea se almacena en la base de datos H2
+Dado que el usuario crea una nueva tarea con título y descripción válidos
+Cuando se consulta la base de datos H2
+Entonces la tarea debe existir con los valores proporcionados
+Y el campo "completed" debe ser false por defecto
